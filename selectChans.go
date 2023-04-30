@@ -72,3 +72,12 @@ func WaitAllChans(timeout time.Duration, chans ...interface{}) bool {
 
 	return true
 }
+
+func TryWriteChan[T any](ch chan T, value T) bool {
+	select {
+	case ch <- value:
+		return true
+	default:
+		return false
+	}
+}
